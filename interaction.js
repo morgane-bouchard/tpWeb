@@ -3,14 +3,15 @@
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
 function DnD(canvas, interactor) {
 	// Définir ici les attributs de la 'classe'
-	var xInit;
-	var yInit;
-	var xFin;
-	var yFin;
-	var isClicked = false;
-	var position
+	this.xInit = 0;
+	this.yInit = 0;
+	this.xFin = 0;
+	this.yFin = 0;
+	this.isClicked = false;
+	this.position;
 	// Developper les 3 fonctions gérant les événements
 	this.clikMouse = function(evt) {
+		interactor.onInteractionStart(this);
 		position = getMousePosition(canvas, evt);
 		xInit = xFin = position.x;
 		yInit = yFin = position.y;
@@ -20,6 +21,7 @@ function DnD(canvas, interactor) {
 
 	this.moveMouse = function(evt) {
 		if (isClicked) {
+			interactor.onInteractionUpdate(this);
 			position = getMousePosition(canvas, evt);
 			xFin = position.x;
 			yFin = position.y;
@@ -29,6 +31,7 @@ function DnD(canvas, interactor) {
 
 	this.declickMouse = function(evt) {
 		if (isClicked) {
+			interactor.onInteractionEnd(this);
 			position = getMousePosition(canvas, evt);
 			isClicked = false;
 			console.log(position.x +";"+ position.y);

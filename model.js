@@ -12,7 +12,7 @@ function Shape(couleur, epaisseur) {
     this.epaisseur =epaisseur;
 }
 
-function Rectangle(x, y, hauteur, largeur) {
+function Rectangle(x, y, largeur, hauteur) {
     Shape.call(this,couleur,epaisseur);
     this.x = x;
     this.y = y;
