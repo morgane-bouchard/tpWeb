@@ -23,3 +23,30 @@ Dessin.prototype.paint = function(ctx) {
         element.paint(ctx);
     });
 };
+
+Dessin.prototype.updateFormeList = function(){
+    const shapeList = document.getElementById('shapeList');
+    const list = document.createElement('li');
+    const button = document.createElement('button');
+    const span = document.createElement('span');
+
+    list.setAttribute('class', 'list-group-item');
+    button.setAttribute('class', 'btn btn-default');
+    span.setAttribute('class','glyphicon glyphicon-remove-sign');
+
+    const id = this.formes.length - 1;
+    list.setAttribute('id', 'shape_'+id);
+    button.setAttribute('id', 'button_'+id);
+    button.setAttribute('onClick', 'drawing.deleteShape('+id+')');
+    const forme = this.formes[id];
+
+    button.appendChild(span);
+    list.appendChild(button);
+
+    if(forme instanceof Rectangle)
+        list.appendChild(document.createTextNode(' Rectangle (' + (forme.x | 0) +',' + (forme.y | 0) + ',' + forme.largeur + ',' + forme.hauteur + ')'));
+    else if(forme instanceof Ligne)
+        list.appendChild(document.createTextNode(' Line (' + (forme.x1 | 0) +',' + (forme.y1 | 0) + ',' + (forme.y2 | 0) + ',' + (forme.y2 | 0) + ')'));
+
+    shapeList.appendChild(list);
+};
