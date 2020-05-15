@@ -1,52 +1,66 @@
 
 // Implémenter ici les fonctions paint à ajouter dans chacune des classes du modèle.
+
+Forme.prototype.paint = function(ctx) {
+    ctx.beginPath();
+    ctx.strokeStyle = this.couleur;
+    ctx.lineWidth = this.epaisseur;
+};
 Rectangle.prototype.paint = function(ctx) {
-    Forme.test.paint.call(this, ctx);
-    ctx.rect(this.x, this.y, this.hauteur, this.largeur);
+    Forme.prototype.paint.call(this, ctx);
+    ctx.rect(this.x1, this.y1, this.epaisseur, this.hauteur);
     ctx.stroke();
 };
 
 Ligne.prototype.paint = function(ctx) {
-    Forme.test.paint.call(this, ctx);
+    Forme.prototype.paint.call(this, ctx);
     ctx.beginPath();
     ctx.moveTo(this.x1, this.y1);
     ctx.lineTo(this.x2, this.y2);
     ctx.stroke();
 };
 
-
 Dessin.prototype.paint = function(ctx) {
-    console.log(this.formes);
     ctx.fillStyle = '#F0F0F0'; // set canvas' background color
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    this.formes.forEach(function (element) {
-        element.paint(ctx);
+    this.formes.forEach(function(eltDuTableau) {
+        // now fill the canvas
+        eltDuTableau.paint(ctx);
     });
 };
 
-Dessin.prototype.updateFormeList = function(){
-    const shapeList = document.getElementById('shapeList');
-    const list = document.createElement('li');
-    const button = document.createElement('button');
-    const span = document.createElement('span');
+Dessin.prototype.updateShapeList = function(){
+    var shapeList = document.getElementById('shapeList');
+    var li = document.createElement('li');
+    var button = document.createElement('button');
+    var span = document.createElement('span');
 
-    list.setAttribute('class', 'list-group-item');
+    li.setAttribute('class', 'list-group-item');
     button.setAttribute('class', 'btn btn-default');
     span.setAttribute('class','glyphicon glyphicon-remove-sign');
 
-    const id = this.formes.length - 1;
-    list.setAttribute('id', 'shape_'+id);
+    var id = this.formes.length-1;
+    li.setAttribute('id', 'shape_'+id);
     button.setAttribute('id', 'button_'+id);
     button.setAttribute('onClick', 'drawing.deleteShape('+id+')');
-    const forme = this.formes[id];
+    var shape = this.formes[id];
 
     button.appendChild(span);
-    list.appendChild(button);
+    li.appendChild(button);
 
-    if(forme instanceof Rectangle)
-        list.appendChild(document.createTextNode(' Rectangle (' + (forme.x | 0) +',' + (forme.y | 0) + ',' + forme.largeur + ',' + forme.hauteur + ')'));
-    else if(forme instanceof Ligne)
-        list.appendChild(document.createTextNode(' Line (' + (forme.x1 | 0) +',' + (forme.y1 | 0) + ',' + (forme.y2 | 0) + ',' + (forme.y2 | 0) + ')'));
+    if(shape instanceof Rectangle)
+        li.appendChild(document.createTextNode(' Rectangle (' + (shape.x1 | 0) +',' + (shape.y1 | 0) + ',' + shape.epaisseur + ',' + shape.hauteur + ')'));
+    else if(shape instanceof Ligne)
+        li.appendChild(document.createTextNode(' Line (' + (shape.x1 | 0) +',' + (shape.y1 | 0) + ',' + (shape.y2 | 0) + ',' + (shape.y2 | 0) + ')'));
 
-    shapeList.appendChild(list);
+    shapeList.appendChild(li);
+};
+
+Dessin.prototype.deleteShape = function(id){
+    var li = document.getElementById('shape_'+id);
+    var index = (li).index();
+    li.remove();
+    this.supprimerForme(index);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.paint(ctx, canvas);
 };

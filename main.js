@@ -1,8 +1,8 @@
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
-canvas.width=800
-canvas.height=600
+canvas.width=800;
+canvas.height=600;
 
 // Code temporaire pour tester le DnD
 //new DnD(canvas);
@@ -19,7 +19,7 @@ canvas.height=600
 ////
 
 // Code final à utiliser pour manipuler Pencil.
-var drawing = new Dessin();
-var pencil = new Pencil(ctx, drawing, canvas);
-drawing.paint(ctx, canvas);
+var dessin = new Dessin();
+var pencil = new Pencil(ctx, dessin, canvas);
+dessin.paint(ctx, canvas);
 
