@@ -1,5 +1,4 @@
-
-var editingMode = { rect: 0, line: 1 };
+const editingMode = {rect: 0, line: 1};
 
 function Pencil(ctx, drawing, canvas) {
 	this.currEditingMode = editingMode.line;
@@ -18,8 +17,6 @@ function Pencil(ctx, drawing, canvas) {
 			this.currEditingMode = editingMode.rect;
 		} else if (document.getElementById('butLine').checked) {
 			this.currEditingMode = editingMode.line;
-		} else if (document.getElementById('butCirc').checked) {
-			this.currEditingMode = editingMode.circ;
 		}
 
 		// Implémentez ici les 3 fonctions onInteractionStart, onInteractionUpdate et onInteractionEnd

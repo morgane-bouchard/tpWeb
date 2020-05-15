@@ -8,33 +8,34 @@ function DnD(canvas, interactor) {
 	this.xFin = 0;
 	this.yFin = 0;
 	this.isClicked = false;
-	this.position;
 	// Developper les 3 fonctions gérant les événements
 	this.clikMouse = function(evt) {
 		interactor.onInteractionStart(this);
-		position = getMousePosition(canvas, evt);
-		xInit = xFin = position.x;
-		yInit = yFin = position.y;
-		isClicked = true;
-		console.log(xInit + ";" + yInit);
+		let position = getMousePosition(canvas, evt);
+		this.xInit = this.xFin = position.x;
+		this.yInit = this.yFin = position.y;
+		this.isClicked = true;
+		console.log(this.xInit + ";" + this.yInit);
 	}.bind(this);
 
 	this.moveMouse = function(evt) {
-		if (isClicked) {
+		let position;
+		if (this.isClicked) {
 			interactor.onInteractionUpdate(this);
 			position = getMousePosition(canvas, evt);
-			xFin = position.x;
-			yFin = position.y;
-			console.log(xFin + ";" + yFin);
+			this.xFin = position.x;
+			this.yFin = position.y;
+			console.log(this.xFin + ";" + this.yFin);
 		}
 	}.bind(this);
 
 	this.declickMouse = function(evt) {
-		if (isClicked) {
+		let position;
+		if (this.isClicked) {
 			interactor.onInteractionEnd(this);
 			position = getMousePosition(canvas, evt);
-			isClicked = false;
-			console.log(position.x +";"+ position.y);
+			this.isClicked = false;
+			console.log(position.x + ";" + position.y);
 		}
 	}.bind(this);
 
